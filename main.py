@@ -35,19 +35,13 @@ async def callback(request: Request, x_line_signature=Header(...)):
 # テキストメッセージを受け取ったときに呼ばれる関数
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    # 受け取ったメッセージ
+    # ユーザーからのメッセージ
     message = event.message.text
-    # 返信するメッセージ
-    res = ""
 
-    if message == "こんにちは":
-        res = "ハロー！"
-    elif message == "ありがとう":
-        res = "どういたしまして！"
-    else:
-        res = "わかりません"
+    # 返信メッセージを組み立て
+    res = f"🕒 リマインダーを登録します：「{message}」ですね！"
 
-    # 返信する (リプライトークンを使用してテキストで返信する)
+    # 返信送信
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=res)
